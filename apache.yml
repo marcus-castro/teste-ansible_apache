@@ -12,6 +12,20 @@
              state: started
 
 
+       - name: Create directory
+         file:
+           path: /var/www/html/teste
+           state: directory
+           mode: '0755'
+
+       - name: Create directory 2
+         file:
+           path: /var/www/html/teste2
+           state: directory
+           mode: '0755'
+
+
+
 ###teste 1
        - name: copy file teste with owner and permissions
          copy:
@@ -52,6 +66,17 @@
              owner: vagrant
              group: sudo
              mode: '0644'
+         notify:
+         - restart apache
+         
+         
+       - name: enable site
+         command: a2ensite teste.com
+         notify:
+         - restart apache
+
+       - name: enable site 2
+         command: a2ensite teste2.com
          notify:
          - restart apache
 
